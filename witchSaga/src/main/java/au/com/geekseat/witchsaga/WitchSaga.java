@@ -7,40 +7,42 @@ package au.com.geekseat.witchsaga;
 
 import au.com.geekseat.witchsaga.model.StoryModel;
 import au.com.geekseat.witchsaga.services.WitchServices;
-import java.util.Scanner;
+import au.com.geekseat.witchsaga.util.AskerUtil;
 
 /**
  *
  * @author Galih Tias
  */
 public class WitchSaga {
-    
+
     public static void main(String[] args) {
+        do {            
+        } while (expellTheWitch(new AskerUtil(System.in, System.out)));
+        new StoryModel().successMessage();
+    }
+
+    public static boolean  expellTheWitch(AskerUtil asker) {
         StoryModel storyModel = new StoryModel();
-        do {  
             storyModel.welcome();
-            double vilagerTime=0;
+            double vilagerTime = 0;
             for (int i = 1; i <= 2; i++) {
-                Scanner sc= new Scanner(System.in); 
-                storyModel.aod(i);
-                int aod = sc.nextInt();
-                storyModel.yod(i);
-                int yod = sc.nextInt();
-                long tmp = WitchServices.villagerTrial(aod, yod);
-                if(tmp==-1){
-                    vilagerTime=0;
+                long tmp = WitchServices.newVillagerTrial(
+                        asker.ask(storyModel.aod(i)), 
+                        asker.ask(storyModel.yod(i))
+                );
+                if (tmp == -1) {
+                    vilagerTime = 0;
                     storyModel.failMessage();
                     break;
-                }else{
-                    vilagerTime+=tmp;
+                } else {
+                    vilagerTime += tmp;
                 }
             }
-           if(vilagerTime>0){
-               storyModel.averageMessage(vilagerTime);
-               break;
-           } 
-        } while (true);
-        storyModel.successMessage();
+            if (vilagerTime > 0) {
+                storyModel.averageMessage(vilagerTime);
+                return false;
+            }
+            return true;
     }
-    
+
 }

@@ -15,12 +15,12 @@ public class StoryModel {
         System.out.println("WELCOME BRAVE PROGRAMMER");
     }
     
-    public void aod(int i){
-        System.out.println("Age of death Villager_"+i);
+    public String aod(int i){
+        return"Age of death Villager_"+i;
     }
     
-    public void yod(int i){
-        System.out.println("Year of death Villager_"+i);
+    public String yod(int i){
+        return"Year of death Villager_"+i;
     }
     
     public void failMessage(){
